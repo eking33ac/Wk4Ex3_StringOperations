@@ -87,7 +87,7 @@ namespace Wk4Ex3_StringOperations
 
 
         // Method to reverse a string 
-        public static string ReverseString(string userString)
+        public static string ReverseString(string aString)
         {
             // initialize return value
             string returnValue = "";
@@ -97,18 +97,21 @@ namespace Wk4Ex3_StringOperations
 
 
             // Declare Variables
-            string reversedUserString = "";      // Declare a string variable for reversedUserString
+            string reversedString = "";      // Declare a string variable for reversedUserString
+            int index = aString.Length - 1;     // Declare an integer variable to hold the length of the string in indexes
 
-
-            // a for loop to take every character is userString and add it to the reverseUserString variable
-            for (int i = (userString.Length - 1); i == 0; i--)
+            // a foreach loop to go through a loop for ever character in the string
+            foreach (char i in aString)
             {
-                reversedUserString += userString[i];
+                // add the value of the string's index to the reversed version of the string
+                reversedString += aString[index];
+                // decrement the index
+                index--;
             }
 
 
-            // set value of returnValue to the reversed user string
-            returnValue = reversedUserString;
+            // set value of returnValue to the reversed string
+            returnValue = reversedString;
 
 
             // return returnValue
@@ -118,7 +121,7 @@ namespace Wk4Ex3_StringOperations
 
 
 
-        public static int CountVowels(string userString)
+        public static int CountVowels(string aString)
         {
             // initialize return value
             int returnValue = Int32.MaxValue;
@@ -129,20 +132,20 @@ namespace Wk4Ex3_StringOperations
 
             // Variable Declaration
             int vowelCount = 0;     // declare an int output variable for vowelCount
-            int stringIndex = 0; // declare stringIndex variable to keep track of what the string index is
+            int stringIndex = 0;        // declare stringIndex variable to keep track of what the string index is
             char stringChar = 'A';      // declare a character variable to hold each character of the string in turn
 
 
             // convert string into all lowercase so we don't need to worry about being case-sensitive
-            userString = userString.ToLower();
+            aString = aString.ToLower();
 
 
             // use a for loop to check each index of the string
             // reinitialize stringIndex to 0 so the programmer can see it's value without looking it up
-            for (stringIndex = 0; stringIndex < userString.Length; stringIndex++)
+            for (stringIndex = 0; stringIndex < aString.Length; stringIndex++)
             {
                 // set stringChar to the first index in userString
-                stringChar = userString[stringIndex];
+                stringChar = aString[stringIndex];
                 // use an if statement to determine if the character is a vowel
                 if (stringChar == 'a' || stringChar == 'e' || stringChar == 'i' || stringChar == 'o' || stringChar == 'u')
                 {
@@ -163,10 +166,10 @@ namespace Wk4Ex3_StringOperations
 
 
         // module to determine if a user's string is a palendrome
-        public static bool IsPalindrome(string userString)
+        public static string IsPalindrome(string userString)
         {
             // initialize return value
-            bool returnValue = false;       // Declare a boolean variable for the return value and initialize it to false
+            string returnValue = "";       // Declare a string variable for the return value and initialize it to hold nothing
 
 
             // processing
@@ -188,10 +191,18 @@ namespace Wk4Ex3_StringOperations
                 isPalindrome = true;
             }
 
-
-            // set the return value to the same is isPalindrome
-            returnValue = isPalindrome;
-
+            // set return value for if the string is NOT a palindrome
+            if (isPalindrome == false)
+            {
+                // set return value to tell user their string is not a palindrome
+                returnValue = "Your string is not a Palindrome.";
+            }
+            // set return value for if the string IS a palindrome
+            else
+            {
+                // set return value to tell user their string is a palindrome
+                returnValue = "Your string is a Palindrome.";
+            }
 
             // return returnValue
             return returnValue;
@@ -204,57 +215,13 @@ namespace Wk4Ex3_StringOperations
 
 
             // Declare Variables
-            string userString = "";     // Declare a string input variable for userString
-            int selection = Int32.MaxValue;
-
-
-            // Store user string in the userString variable
-            userString = HandleStringInput(userString);
-
-            Console.WriteLine("User String value: " + userString);
-
-
-            Console.WriteLine(userString.Reverse());
+            string userString = "";     // Declare a string variable for userString
+            int selection = Int32.MaxValue;     // declare an integer value for the selection the user will choose
 
 
 
-
-
-
-            // Converting string to character array 
-            char[] charArray = userString.ToCharArray();
-
-            // Declaring an empty string
-            string reversedString = String.Empty;
-
-            // Iterating the each character from right to left 
-            for (int i = charArray.Length - 1; i > -1; i--)
-            {
-
-                // Append each character to the reversedstring.
-                reversedString += charArray[i];
-            }
-
-            Console.WriteLine(reversedString);
-
-
-
-            /*
-
-            Console.WriteLine("Reverse String output: " + ReverseString(userString));
-
-            Console.WriteLine();
-
-            Console.WriteLine("Count Vowels output: " + CountVowels(userString));
-
-            Console.WriteLine();
-
-            Console.WriteLine("Is Pelindrome output: " + IsPalindrome(userString));
-
-            Console.ReadLine();
-
-
-            */
+            // Prompt user to type string then store user string in the userString variable
+            userString = HandleStringInput();
 
 
 
@@ -263,6 +230,8 @@ namespace Wk4Ex3_StringOperations
             {
                 // Prompt user to select a choice of what to do with their string
                 Console.WriteLine("Select an operation to perform on your sentence/string:");
+
+
                 // Output to tell the user they can type 1 to reverse their string
                 Console.WriteLine("1. Type the characters in reverse.");
                 // Output to tell the user they can type 2 to count the vowels in their string
@@ -270,9 +239,11 @@ namespace Wk4Ex3_StringOperations
                 // Output to tell the user they can type 3 to check if their string is a palendrome
                 Console.WriteLine("3. Check if your string is a palendrome.");
 
+
                 // Call the try catch in the Interger Conversion module
                 // Make selection equal the return value of the module
                 selection = HandleIntInput("Your desired operation (1-3): ", "An error occured. Please ensure you enter a valid whole number.");
+
 
                 // If the selection isn't between 1 and 3, change the input back to the while evaluation number to have them try again
                 if (!(selection >= 1 && selection <= 3))
@@ -287,47 +258,35 @@ namespace Wk4Ex3_StringOperations
             while (selection == Int32.MaxValue);
 
 
-            // // output the number of vowels in the string
-            //Console.WriteLine($"The number of vowels in the string is: {vowelCount}");
 
 
 
-            /*
-
+            // use a switch case to perform an operation based on the selection
             switch (selection)
             {
                 // Run this case if selection = 1
                 case 1:
-                    // Tell the user the amount they input and what currency they chose to convert it to
-                    Console.WriteLine($"You are converting {amount:C2} to USD.");
-                    // convert the amount to USD
-                    convertedAmount = ConvertToUSD(amount, startCurrency);
-                    // Output the converted value
-                    Console.WriteLine($"The converted amount is {convertedAmount:C2}.");
+                    // Print the string in reverse order
+                    Console.WriteLine(ReverseString(userString));
+
                     // Jump out of switch here.
                     break;
 
 
-                // Run this case if selection = 1
+                // Run this case if selection = 2
                 case 2:
-                    // Tell the user the amount they input and what currency they chose to convert it to
-                    Console.WriteLine($"You are converting {amount:C2} to EUR.");
-                    // convert the amount to USD
-                    convertedAmount = ConvertToEUR(amount, startCurrency);
-                    // Output the converted value
-                    Console.WriteLine($"The converted amount is {convertedAmount:C2}.");
+                    // print how many vowels the string has
+                    Console.WriteLine(CountVowels(userString));
+
                     // Jump out of switch here.
                     break;
 
 
-                // Run this case if selection = 1
+                // Run this case if selection = 3
                 case 3:
-                    // Tell the user the amount they input and what currency they chose to convert it to
-                    Console.WriteLine($"You are converting {amount:C2} to JPY.");
-                    // convert the amount to USD
-                    convertedAmount = ConvertToJPY(amount, startCurrency);
-                    // Output the converted value
-                    Console.WriteLine($"The converted amount is {convertedAmount:C2}.");
+                    // Output whether or not the user's string an a palindrome
+                    Console.WriteLine(IsPalindrome(userString));
+
                     // Jump out of switch here.
                     break;
 
@@ -335,22 +294,19 @@ namespace Wk4Ex3_StringOperations
                 default:
                     // Output a polite message in case of unforseen error.
                     Console.WriteLine("It seems something went wrong on our end. Please close the program and try again.");
+
                     // Jump out of switch here.
                     break;
             }
-
-            */
 
 
 
             // Thank user for using the program
             Console.WriteLine("Thank you for using this currency conversion program! Come again!");
 
+
             // Pause at the end of program for user to read
             Console.ReadLine();
-
-
-
         }
     }
 }
